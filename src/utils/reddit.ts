@@ -1,5 +1,10 @@
 import type { Post, RedditListing, RedditAbout } from "../types/reddit";
 
+// In development, requests go through the Vite proxy (/api/reddit → www.reddit.com)
+// In production, requests go through the Vercel edge function (api/reddit → www.reddit.com)
+// which injects auth cookies server-side, bypassing CORS and Reddit's login requirement.
+const REDDIT_BASE = "/api/reddit";
+
 export function relativeTime(utcSeconds: number): string {
   const seconds = Math.floor(Date.now() / 1000) - utcSeconds;
   if (seconds < 60) return `${seconds}s`;
@@ -34,7 +39,7 @@ export async function validateSubreddit(
   signal?: AbortSignal,
 ): Promise<boolean> {
   try {
-    const res = await fetch(`https://www.reddit.com/r/${name}/about.json`, {
+    const res = await fetch(`${REDDIT_BASE}/r/${name}/about.json`, {
       signal,
     });
     if (!res.ok) return false;
@@ -55,7 +60,7 @@ export async function fetchPosts(
   if (timeFilter) params.set("t", timeFilter);
 
   const res = await fetch(
-    `https://www.reddit.com/r/${subreddit}/${sort}.json?${params}`,
+    `${REDDIT_BASE}/r/${subreddit}/${sort}.json?${params}`,
     { signal },
   );
   if (!res.ok) throw new Error(`Failed to load r/${subreddit}`);
