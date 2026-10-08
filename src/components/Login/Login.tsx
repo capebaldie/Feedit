@@ -1,13 +1,20 @@
 import { useState, type FormEvent } from "react";
+import type { LoginFailure, LoginResult } from "../../hooks/useAuth";
 import "./Login.css";
 
 interface LoginProps {
-  onLogin: (code: string) => Promise<boolean>;
+  onLogin: (code: string) => Promise<LoginResult>;
 }
+
+const FAILURE_MESSAGE: Record<LoginFailure, string> = {
+  incorrect: "Incorrect code.",
+  "rate-limited": "Too many attempts. Try again in a few minutes.",
+  unavailable: "Could not reach the server. Check your connection.",
+};
 
 export function Login({ onLogin }: LoginProps) {
   const [code, setCode] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<LoginFailure | null>(null);
   const [busy, setBusy] = useState(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -18,11 +25,14 @@ export function Login({ onLogin }: LoginProps) {
     setError(null);
 
     try {
-      if ((await onLogin(code.trim())) === false) setError("Incorrect code.");
+      const result = await onLogin(code.trim());
+      if (!result.ok) setError(result.reason);
     } finally {
       setBusy(false);
     }
   }
+
+  const message = error ? FAILURE_MESSAGE[error] : null;
 
   return (
     <form className="login__form" onSubmit={handleSubmit}>
@@ -43,12 +53,12 @@ export function Login({ onLogin }: LoginProps) {
         onChange={(event) => setCode(event.target.value)}
         disabled={busy}
         aria-invalid={error ? true : undefined}
-        aria-describedby={error ? "login-error" : undefined}
+        aria-describedby={message ? "login-error" : undefined}
       />
 
-      {error && (
+      {message && (
         <p className="login__error" id="login-error" role="alert">
-          {error}
+          {message}
         </p>
       )}
 
