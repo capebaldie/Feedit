@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSubreddits } from "./hooks/useSubreddits";
 import { SubredditSection } from "./components/SubredditSection/SubredditSection";
 import { SearchModal } from "./components/SearchModal/SearchModal";
+import { logout } from "./utils/auth";
 import "./App.css";
 
 export default function App() {
@@ -84,6 +85,28 @@ export default function App() {
               strokeLinejoin="round"
             >
               <path d="M12 5v14M5 12h14" />
+            </svg>
+          </button>
+          <button
+            className="app__logout-btn"
+            onClick={() => void logout()}
+            aria-label="Log out"
+            title="Log out"
+          >
+            <svg
+              aria-hidden="true"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <polyline points="16 17 21 12 16 7" />
+              <line x1="21" y1="12" x2="9" y2="12" />
             </svg>
           </button>
         </div>

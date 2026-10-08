@@ -1,9 +1,23 @@
 import type { Post, RedditListing, RedditAbout } from "../types/reddit";
+import { UNAUTHORIZED_EVENT } from "./auth";
 
 // In development, requests go through the Vite proxy (/api/reddit → www.reddit.com)
 // In production, requests go through the Vercel edge function (api/reddit → www.reddit.com)
 // which injects auth cookies server-side, bypassing CORS and Reddit's login requirement.
 const REDDIT_BASE = "/api/reddit";
+
+// The session cookie rides along automatically on these same-origin requests.
+async function request(path: string, signal?: AbortSignal): Promise<Response> {
+  const res = await fetch(`${REDDIT_BASE}${path}`, { signal });
+
+  if (res.status === 401) {
+    // Session expired mid-use. Hand control back to the login screen instead of
+    // leaving "Could not load r/…" errors all over the feed.
+    window.dispatchEvent(new Event(UNAUTHORIZED_EVENT));
+  }
+
+  return res;
+}
 
 export function relativeTime(utcSeconds: number): string {
   const seconds = Math.floor(Date.now() / 1000) - utcSeconds;
@@ -39,9 +53,7 @@ export async function validateSubreddit(
   signal?: AbortSignal,
 ): Promise<boolean> {
   try {
-    const res = await fetch(`${REDDIT_BASE}/r/${name}/about.json`, {
-      signal,
-    });
+    const res = await request(`/r/${name}/about.json`, signal);
     if (!res.ok) return false;
     const json: RedditAbout = await res.json();
     return json?.data?.subreddit_type === "public";
@@ -59,10 +71,7 @@ export async function fetchPosts(
   const params = new URLSearchParams({ limit: "15" });
   if (timeFilter) params.set("t", timeFilter);
 
-  const res = await fetch(
-    `${REDDIT_BASE}/r/${subreddit}/${sort}.json?${params}`,
-    { signal },
-  );
+  const res = await request(`/r/${subreddit}/${sort}.json?${params}`, signal);
   if (!res.ok) throw new Error(`Failed to load r/${subreddit}`);
   const json: RedditListing = await res.json();
   return parsePosts(json);

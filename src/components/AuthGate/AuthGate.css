@@ -1,0 +1,33 @@
+.auth-gate {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.auth-gate--centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.auth-gate__spinner {
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--border);
+  border-top-color: #ff4500;
+  border-radius: 50%;
+  animation: auth-gate-spin 0.7s linear infinite;
+}
+
+@keyframes auth-gate-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .auth-gate__spinner {
+    animation-duration: 2.4s;
+  }
+}

@@ -17,10 +17,20 @@ export function usePosts(subreddit: string, sort: string, timeFilter?: string): 
 
   const refresh = useCallback(() => setTick((t) => t + 1), []);
 
-  useEffect(() => {
-    const controller = new AbortController();
+  const requestKey = `${subreddit}/${sort}/${timeFilter ?? ''}/${tick}`;
+  const [activeKey, setActiveKey] = useState(requestKey);
+
+  // Reset to the loading state while rendering rather than from inside the
+  // effect, which would trigger a cascading render.
+  // https://react.dev/learn/you-might-not-need-an-effect
+  if (requestKey !== activeKey) {
+    setActiveKey(requestKey);
     setLoading(true);
     setError(null);
+  }
+
+  useEffect(() => {
+    const controller = new AbortController();
 
     fetchPosts(subreddit, sort, timeFilter, controller.signal)
       .then((data) => {
