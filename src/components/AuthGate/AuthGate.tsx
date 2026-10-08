@@ -61,6 +61,20 @@ function FeedColumns() {
   );
 }
 
+// Four small blocks straddling the panel's top edge. Same rectangle language
+// as the feed motif, and it marks the panel without the heavy top rule that
+// reads as a stock callout.
+function CornerBlocks() {
+  return (
+    <svg className="auth-gate__blocks" viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="0" y="0" width="10" height="10" rx="1.5" />
+      <rect x="14" y="0" width="10" height="10" rx="1.5" />
+      <rect x="0" y="14" width="10" height="10" rx="1.5" />
+      <rect x="14" y="14" width="10" height="10" rx="1.5" />
+    </svg>
+  );
+}
+
 export function AuthGate({ children }: { children: ReactNode }) {
   const { status, login } = useAuth();
 
@@ -117,6 +131,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
         </div>
 
         <div className="auth-gate__panel">
+          <CornerBlocks />
           <Login onLogin={login} />
         </div>
       </div>

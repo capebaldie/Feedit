@@ -107,14 +107,29 @@
 /* --- panel ------------------------------------------------------------ */
 
 .auth-gate__panel {
+  position: relative;
   padding: 2rem 1.75rem;
   background: var(--surface);
   border: 1px solid var(--border);
-  /* The only accent on the form side: a single orange rule along the top. */
-  border-top: 2px solid var(--brand);
   border-radius: 4px;
   animation: auth-gate-rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.16s both;
 }
+
+/* Sits across the top border rather than replacing it, so the panel keeps an
+   even hairline all the way round. */
+.auth-gate__blocks {
+  position: absolute;
+  top: -11px;
+  right: 22px;
+  width: 24px;
+  height: 24px;
+  fill: var(--brand);
+}
+
+.auth-gate__blocks rect:nth-child(1) { opacity: 1; }
+.auth-gate__blocks rect:nth-child(2) { opacity: 0.55; }
+.auth-gate__blocks rect:nth-child(3) { opacity: 0.3; }
+.auth-gate__blocks rect:nth-child(4) { opacity: 0.16; }
 
 /* --- loading ---------------------------------------------------------- */
 

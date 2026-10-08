@@ -24,6 +24,18 @@ const SORT_OPTIONS: SortOption[] = [
   { label: "Top — All Time", sort: "top", timeFilter: "all" },
 ];
 
+export // A small stack of blocks echoing the corner mark on the login panel, so each
+// column is identified the same way the app identifies itself.
+function ColumnMark() {
+  return (
+    <svg className="subreddit-section__mark" viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="0" y="0" width="10" height="10" rx="1.5" />
+      <rect x="14" y="0" width="10" height="10" rx="1.5" />
+      <rect x="0" y="14" width="10" height="10" rx="1.5" />
+    </svg>
+  );
+}
+
 export function SubredditSection({ subreddit, onRemove }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const { sort, timeFilter } = SORT_OPTIONS[selectedIndex];
@@ -36,6 +48,7 @@ export function SubredditSection({ subreddit, onRemove }: Props) {
   return (
     <section className="subreddit-section">
       <div className="subreddit-section__header">
+        <ColumnMark />
         <h2><span>r/</span>{subreddit}</h2>
         <div className="subreddit-section__header-right">
           <select

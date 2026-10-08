@@ -23,7 +23,10 @@ export default function App() {
   return (
     <div className="app">
       <header className="app__header">
-        <h1>Feedit</h1>
+        <h1 className="app__wordmark">
+          <span className="app__wordmark-dot" aria-hidden="true" />
+          Feedit
+        </h1>
         <div className="app__header-actions">
           <button
             className="app__theme-btn"

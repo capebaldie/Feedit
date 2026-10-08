@@ -73,9 +73,18 @@ Dark/light mode is toggled via `data-theme="dark"` on `<html>` and stored in `lo
 Two brand tokens exist because `#ff4500` is not usable everywhere:
 
 - `--brand` — rules, focus rings, icons. Clears 3:1, which is all non-text needs.
-- `--brand-strong` — button fills behind white text. `#ff4500` only reaches 3.44:1, below the 4.5:1 that a label needs.
+- `--brand-strong` / `--brand-strong-hover` — button fills behind white text. `#ff4500` only reaches 3.44:1, below the 4.5:1 a label needs.
 
-Text contrast is verified, not eyeballed. `--text-faint` carries post timestamps, source domains and control icons, so it must clear 4.5:1 on `--surface`; its previous value was 2.09:1 in dark mode.
+Text contrast is verified, not eyeballed. `--text-faint` carries post timestamps, source domains and control icons, so it must clear 4.5:1 on `--surface`; its previous value was 2.09:1 in dark mode. Post card borders sit below 3:1 deliberately — the card is a link identified by its text and hover state, so its border is decorative separation rather than the sole means of identification.
+
+### Visual language
+
+The login screen sets the direction and the app follows it.
+
+- **Flat.** No `box-shadow` anywhere in the UI. Depth comes from hairline borders and tinted surfaces; focus is shown with an outline, not a soft ring.
+- **One radius.** 4px throughout, 3px for the flair badge. Rounded chrome at 8–14px reads as stock.
+- **The block mark.** A stack of small squares in `--brand` at descending opacity — 2×2 on the login panel, 3 blocks in each column header. This is the recurring identity element. Not a coloured top border, which is the common tell to avoid.
+- **Wordmark.** A brand block plus letterspaced uppercase caps, never orange display type.
 
 ### Styling conventions
 

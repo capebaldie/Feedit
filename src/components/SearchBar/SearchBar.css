@@ -11,18 +11,18 @@
   min-width: 200px;
   padding: 0.55rem 0.8rem;
   border: 1px solid var(--border-input);
-  border-radius: 8px;
+  border-radius: 4px;
   font-size: 0.925rem;
   font-family: inherit;
-  outline: none;
   background: var(--surface-raised);
   color: var(--text);
-  transition: border-color 0.15s, box-shadow 0.15s;
+  transition: border-color 0.15s;
 }
 
 .search-bar input:focus {
-  border-color: #ff4500;
-  box-shadow: 0 0 0 3px rgba(255, 69, 0, 0.12);
+  outline: 2px solid var(--brand);
+  outline-offset: 1px;
+  border-color: var(--brand);
 }
 
 .search-bar input:disabled {
@@ -31,25 +31,29 @@
 
 .search-bar button {
   padding: 0.55rem 1.15rem;
-  background: #ff4500;
+  background: var(--brand-strong);
   color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 0.925rem;
+  border: 1px solid var(--brand-strong);
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
   font-family: inherit;
-  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
   cursor: pointer;
-  transition: background 0.15s, box-shadow 0.15s;
+  transition: background 0.15s, border-color 0.15s;
   white-space: nowrap;
 }
 
 .search-bar button:hover:not(:disabled) {
-  background: #e03d00;
-  box-shadow: 0 2px 8px rgba(255, 69, 0, 0.35);
+  background: var(--brand-strong-hover);
+  border-color: var(--brand-strong-hover);
 }
 
 .search-bar button:disabled {
-  background: var(--border-input);
+  background: var(--disabled-bg);
+  border-color: var(--border-input);
+  color: var(--text-muted);
   cursor: not-allowed;
 }
 
