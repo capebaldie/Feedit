@@ -1,20 +1,127 @@
+/* Login screen. Deliberately flat: depth comes from the hairline rules and
+   the tinted panel, not from box-shadow. */
+
 .auth-gate {
-  min-height: 100vh;
+  min-height: 100dvh;
   background: var(--bg);
   color: var(--text);
-}
-
-.auth-gate--centered {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem;
+  padding: 2rem 1.5rem;
+  /* Faint dot grid so the surface is not a dead flat fill. */
+  background-image: radial-gradient(var(--border) 1px, transparent 1px);
+  background-size: 22px 22px;
+  background-position: -1px -1px;
 }
+
+.auth-gate__inner {
+  width: 100%;
+  max-width: 980px;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  align-items: center;
+  gap: 3.5rem;
+}
+
+.auth-gate--centered {
+  gap: 0;
+}
+
+/* --- masthead --------------------------------------------------------- */
+
+.auth-gate__masthead {
+  animation: auth-gate-rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.auth-gate__wordmark {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 1.75rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--text-muted);
+}
+
+.auth-gate__wordmark-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: #ff4500;
+}
+
+.auth-gate__headline {
+  margin: 0;
+  font-size: clamp(2rem, 5.2vw, 3.05rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -1.6px;
+  color: var(--text);
+  text-wrap: balance;
+}
+
+.auth-gate__sub {
+  margin: 1.1rem 0 0;
+  max-width: 34ch;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+/* --- motif ------------------------------------------------------------ */
+
+.auth-gate__motif {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  margin-top: 2.5rem;
+  animation: auth-gate-rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+.auth-gate__track {
+  fill: var(--surface);
+  stroke: var(--border-input);
+  stroke-width: 1;
+}
+
+.auth-gate__card {
+  fill: var(--border-light);
+}
+
+.auth-gate__card--lead {
+  fill: #ff4500;
+  opacity: 0.9;
+}
+
+[data-theme="dark"] .auth-gate__card {
+  fill: var(--surface-raised);
+}
+
+[data-theme="dark"] .auth-gate__card--lead {
+  fill: #ff4500;
+}
+
+/* --- panel ------------------------------------------------------------ */
+
+.auth-gate__panel {
+  padding: 2rem 1.75rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  /* The only accent on the form side: a single orange rule along the top. */
+  border-top: 2px solid var(--brand);
+  border-radius: 4px;
+  animation: auth-gate-rise 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.16s both;
+}
+
+/* --- loading ---------------------------------------------------------- */
 
 .auth-gate__spinner {
   width: 26px;
   height: 26px;
-  border: 2px solid var(--border);
+  border: 2px solid var(--border-input);
   border-top-color: #ff4500;
   border-radius: 50%;
   animation: auth-gate-spin 0.7s linear infinite;
@@ -26,7 +133,41 @@
   }
 }
 
+@keyframes auth-gate-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 820px) {
+  .auth-gate__inner {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+    max-width: 440px;
+  }
+
+  /* The motif is decorative and the first thing to go when space is tight. */
+  .auth-gate__motif {
+    display: none;
+  }
+
+  .auth-gate__headline {
+    letter-spacing: -1px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .auth-gate__masthead,
+  .auth-gate__panel,
+  .auth-gate__motif {
+    animation: none;
+  }
+
   .auth-gate__spinner {
     animation-duration: 2.4s;
   }

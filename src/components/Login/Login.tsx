@@ -36,8 +36,10 @@ export function Login({ onLogin }: LoginProps) {
 
   return (
     <form className="login__form" onSubmit={handleSubmit}>
-      <h1 className="login__title">Feedit</h1>
-      <p className="login__hint">Enter your access code to continue.</p>
+      <h2 className="login__title">Unlock your feed</h2>
+      <p className="login__hint">
+        This reader is private. Your session lasts 30 days on this browser.
+      </p>
 
       <label className="login__label" htmlFor="login-code">
         Access code

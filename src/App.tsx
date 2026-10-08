@@ -113,13 +113,13 @@ export default function App() {
       </header>
 
       {subreddits.length === 0 ? (
-        <div className="app__empty">
+        <main className="app__empty">
           <p>
             Click <strong>+</strong> to add your first subreddit.
           </p>
-        </div>
+        </main>
       ) : (
-        <div className="app__feed">
+        <main className="app__feed">
           {subreddits.map((name) => (
             <SubredditSection
               key={name}
@@ -127,7 +127,7 @@ export default function App() {
               onRemove={removeSubreddit}
             />
           ))}
-        </div>
+        </main>
       )}
 
       {modalOpen && (

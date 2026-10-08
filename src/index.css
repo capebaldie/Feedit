@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap');
+/* Fonts are loaded once via <link> in index.html. A second @import here
+   would duplicate the request and block rendering. */
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -6,14 +7,22 @@
 
 :root {
   --bg: #eef0f4;
+  /* Brand orange. #ff4500 clears 3:1 for rules, focus rings and icons, but
+     only reaches 3.44:1 behind white text, so a filled button carrying a
+     label uses --brand-strong (4.81:1) instead. */
+  --brand: #ff4500;
+  --brand-strong: #d43800;
+  --brand-strong-hover: #b83300;
   --surface: #ffffff;
   --surface-raised: #ffffff;
   --border: #e2e5ea;
   --border-input: #d0d5dd;
   --border-light: #e8eaed;
   --text: #111827;
-  --text-muted: #6b7280;
-  --text-faint: #9ca3af;
+  /* muted/faint carry post timestamps, source domains and control icons, so
+     they must clear 4.5:1 on --surface. Verified: 5.98:1 and 4.83:1. */
+  --text-muted: #5b6472;
+  --text-faint: #6b7280;
   --flair-bg: #eef2ff;
   --flair-color: #4f46e5;
   --skeleton-a: #e9ebee;
@@ -27,14 +36,18 @@
 
 [data-theme="dark"] {
   --bg: #0d1117;
+  --brand: #ff4500;
+  --brand-strong: #d43800;
+  --brand-strong-hover: #b83300;
   --surface: #161b22;
   --surface-raised: #21262d;
   --border: #30363d;
   --border-input: #3d4450;
   --border-light: #2d333b;
   --text: #e6edf3;
-  --text-muted: #7d8590;
-  --text-faint: #484f58;
+  /* 5.62:1 and 4.64:1 on --surface. The previous #484f58 was 2.09:1. */
+  --text-muted: #8b949e;
+  --text-faint: #7d8590;
   --flair-bg: #1c2333;
   --flair-color: #818cf8;
   --skeleton-a: #21262d;
